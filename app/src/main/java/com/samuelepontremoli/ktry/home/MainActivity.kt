@@ -2,7 +2,6 @@ package com.samuelepontremoli.ktry.home
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.View
 import com.samuelepontremoli.ktry.R
@@ -30,22 +29,27 @@ class MainActivity : AppCompatActivity() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
 
-        var listGifs = listOf<GiphyGif>()
+        var listGifs : List<GiphyGif>
 
         //Setting up recycler
-        main_recycler.setHasFixedSize(true);
-        main_recycler.setItemViewCacheSize(20);
-        main_recycler.setDrawingCacheEnabled(true);
-        main_recycler.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+        main_recycler.setHasFixedSize(true)
+        main_recycler.setItemViewCacheSize(20)
+        main_recycler.isDrawingCacheEnabled = true
+        main_recycler.drawingCacheQuality = View.DRAWING_CACHE_QUALITY_HIGH
 
         //TODO This is bad maybe
-        trendingFlow.subscribe {
-            response -> listGifs = response.data//Set home adapter
+        trendingFlow.subscribe ({
+            response ->
+            listGifs = response.data//Set home adapter
             main_recycler.adapter = HomeAdapter(listGifs)
             val manager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
             manager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
             main_recycler.layoutManager = manager
-        }
+        },
+        {
+            error ->
+            error.printStackTrace()
+        })
 
     }
 

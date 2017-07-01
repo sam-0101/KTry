@@ -3,7 +3,6 @@ package com.samuelepontremoli.ktry.home
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import com.samuelepontremoli.ktry.R
 import com.samuelepontremoli.ktry.inflate
 import com.samuelepontremoli.ktry.loadFromUrl
@@ -14,16 +13,10 @@ import kotlinx.android.synthetic.main.gif_item.view.*
  * Created by samuele on 01/07/17.
  * Home Adapter
  */
-class HomeAdapter(listGifs: List<GiphyGif>) : RecyclerView.Adapter<HomeAdapter.GifHolder>() {
-
-    val listGifs: List<GiphyGif>
-
-    init {
-        this.listGifs = listGifs
-    }
+class HomeAdapter(val listGifs: List<GiphyGif>) : RecyclerView.Adapter<HomeAdapter.GifHolder>() {
 
     override fun onBindViewHolder(holder: GifHolder, position: Int) {
-        holder.gifView.loadFromUrl(listGifs.get(position).images.fixedHeight.url)
+        holder.bind(listGifs[position])
     }
 
     override fun getItemCount(): Int {
@@ -35,11 +28,12 @@ class HomeAdapter(listGifs: List<GiphyGif>) : RecyclerView.Adapter<HomeAdapter.G
         return GifHolder(v)
     }
 
-    class GifHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val gifView: ImageView
+    class GifHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
 
-        init {
-            gifView = itemView.gif_image
+        val gifView = itemView?.gif_image
+
+        fun bind(gif: GiphyGif) {
+            gifView?.loadFromUrl(gif.images.fixedHeight.url)
         }
     }
 
