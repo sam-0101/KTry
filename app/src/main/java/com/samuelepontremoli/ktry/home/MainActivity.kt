@@ -11,6 +11,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 
+
 /**
  * Created by samuele on 01/07/17.
  * Main class
@@ -21,6 +22,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        initUi()
+
+        callGifs()
+    }
+
+    private fun callGifs() {
         //Set api repository
         val giphyRepository = GiphyRepositoryProvider.provideGiphyRepository()
 
@@ -29,28 +36,31 @@ class MainActivity : AppCompatActivity() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
 
-        var listGifs : List<GiphyGif>
+        trendingFlow.subscribe({
+            (data) ->
+            handleResponse(data)
+        }, {
+            error ->
+            handleError(error)
+        })
+    }
 
-        //Setting up recycler
+    private fun initUi() {
         main_recycler.setHasFixedSize(true)
         main_recycler.setItemViewCacheSize(20)
         main_recycler.isDrawingCacheEnabled = true
         main_recycler.drawingCacheQuality = View.DRAWING_CACHE_QUALITY_HIGH
+    }
 
-        //TODO This is bad maybe
-        trendingFlow.subscribe ({
-            response ->
-            listGifs = response.data//Set home adapter
-            main_recycler.adapter = HomeAdapter(listGifs)
-            val manager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-            manager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
-            main_recycler.layoutManager = manager
-        },
-        {
-            error ->
-            error.printStackTrace()
-        })
+    private fun handleResponse(listGifs: List<GiphyGif>) {
+        val manager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        manager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
+        main_recycler.layoutManager = manager
+        main_recycler.adapter = HomeAdapter(listGifs)
+    }
 
+    private fun handleError(error: Throwable) {
+        error.printStackTrace()
     }
 
 }
