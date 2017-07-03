@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.support.v7.widget.Toolbar
 import android.view.View
+import com.samuelepontremoli.ktry.NUM_CACHED_VIEWS
 import com.samuelepontremoli.ktry.R
 import com.samuelepontremoli.ktry.network.GiphyGif
 import com.samuelepontremoli.ktry.network.GiphyRepositoryProvider
@@ -53,7 +54,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initUi() {
         //main_recycler.setHasFixedSize(true)
-        gifRecycler?.setItemViewCacheSize(20)
+        gifRecycler?.setItemViewCacheSize(NUM_CACHED_VIEWS)
         gifRecycler?.isDrawingCacheEnabled = true
         gifRecycler?.drawingCacheQuality = View.DRAWING_CACHE_QUALITY_HIGH
     }
