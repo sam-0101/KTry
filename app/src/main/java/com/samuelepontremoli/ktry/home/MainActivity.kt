@@ -13,6 +13,7 @@ import com.samuelepontremoli.ktry.R
 import com.samuelepontremoli.ktry.network.GiphyGif
 import com.samuelepontremoli.ktry.network.GiphyRepositoryProvider
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
 /**
@@ -25,6 +26,8 @@ class MainActivity : AppCompatActivity() {
     private var toolbar: Toolbar? = null
     private var toggle: ActionBarDrawerToggle? = null
     private var gifRecycler: RecyclerView? = null
+
+    protected var subscriptions = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,14 +66,15 @@ class MainActivity : AppCompatActivity() {
         val trendingFlow = giphyRepository.getTrending() //val makes reference final
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    (data) ->
+                    handleResponse(data)
+                }, {
+                    error ->
+                    handleError(error)
+                })
 
-        trendingFlow.subscribe({
-            (data) ->
-            handleResponse(data)
-        }, {
-            error ->
-            handleError(error)
-        })
+        subscriptions.add(trendingFlow)
     }
 
     private fun handleResponse(listGifs: List<GiphyGif>) {
@@ -82,6 +86,16 @@ class MainActivity : AppCompatActivity() {
 
     private fun handleError(error: Throwable) {
         error.printStackTrace()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        subscriptions = CompositeDisposable()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        subscriptions.clear()
     }
 
     override fun onBackPressed() {

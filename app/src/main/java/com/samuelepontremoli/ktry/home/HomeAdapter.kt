@@ -34,8 +34,8 @@ class HomeAdapter(val listGifs: List<GiphyGif>) : RecyclerView.Adapter<HomeAdapt
         val gifView: RatioImageView? = itemView?.gif_image
 
         fun bind(gif: GiphyGif) {
-            gifView?.setHeightRatio(gif.images.fixedHeight.getHeightScale())
-            gifView?.loadFromUrl(gif.images.fixedHeight.url)
+            gifView?.setHeightRatio(gif.images.fixedHeightSmall.getHeightScale())
+            gifView?.loadFromUrl(gif.images.fixedHeightSmall.url)
         }
 
     }

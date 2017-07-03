@@ -28,10 +28,35 @@ data class GiphyGif(
 )
 
 data class GiphyImages(
-        @SerializedName("fixed_height") val fixedHeight: GiphyFixedHeight
+        @SerializedName("fixed_height") val fixedHeight: GiphyFixedHeight,
+        @SerializedName("fixed_height_small") val fixedHeightSmall: GiphyFixedHeight,
+        @SerializedName("preview_gif") val previewGif: GiphyFixedHeight,
+        @SerializedName("downsized") val downsizedGif: GiphyFixedHeight
 )
 
 data class GiphyFixedHeight(
+        @SerializedName("url") val url: String,
+        @SerializedName("width") val width: Int,
+        @SerializedName("height") val height: Int,
+        @SerializedName("size") val size: Int
+) {
+    fun getHeightScale(): Float {
+        return height.toFloat() / width.toFloat()
+    }
+}
+
+data class GiphyPreviewGif(
+        @SerializedName("url") val url: String,
+        @SerializedName("width") val width: Int,
+        @SerializedName("height") val height: Int,
+        @SerializedName("size") val size: Int
+) {
+    fun getHeightScale(): Float {
+        return height.toFloat() / width.toFloat()
+    }
+}
+
+data class GiphyDownsized(
         @SerializedName("url") val url: String,
         @SerializedName("width") val width: Int,
         @SerializedName("height") val height: Int,
