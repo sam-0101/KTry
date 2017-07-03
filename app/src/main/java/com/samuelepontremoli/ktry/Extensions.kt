@@ -10,15 +10,15 @@ import com.bumptech.glide.Glide
  * Created by samuele on 01/07/17.
  * Android extensions
  */
-fun View.setVisible() {
+fun View.makeVisible() {
     this.visibility = View.VISIBLE
 }
 
-fun View.setInvisible() {
+fun View.makeInvisible() {
     this.visibility = View.INVISIBLE
 }
 
-fun View.setGone() {
+fun View.makeGone() {
     this.visibility = View.GONE
 }
 

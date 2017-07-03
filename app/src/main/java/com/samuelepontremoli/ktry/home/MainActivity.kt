@@ -23,12 +23,12 @@ import io.reactivex.schedulers.Schedulers
  */
 class MainActivity : AppCompatActivity() {
 
-    private var drawerLayout: DrawerLayout? = null
-    private var toolbar: Toolbar? = null
-    private var toggle: ActionBarDrawerToggle? = null
-    private var gifRecycler: RecyclerView? = null
+    private lateinit var drawerLayout: DrawerLayout
+    private lateinit var toolbar: Toolbar
+    private lateinit var toggle: ActionBarDrawerToggle
+    private lateinit var gifRecycler: RecyclerView
 
-    protected var subscriptions = CompositeDisposable()
+    private var subscriptions = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,15 +48,15 @@ class MainActivity : AppCompatActivity() {
     private fun initDrawer() {
         setSupportActionBar(toolbar)
         toggle = ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
-        drawerLayout?.addDrawerListener(toggle as ActionBarDrawerToggle)
-        toggle?.syncState()
+        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
     }
 
     private fun initUi() {
         //main_recycler.setHasFixedSize(true)
-        gifRecycler?.setItemViewCacheSize(NUM_CACHED_VIEWS)
-        gifRecycler?.isDrawingCacheEnabled = true
-        gifRecycler?.drawingCacheQuality = View.DRAWING_CACHE_QUALITY_HIGH
+        gifRecycler.setItemViewCacheSize(NUM_CACHED_VIEWS)
+        gifRecycler.isDrawingCacheEnabled = true
+        gifRecycler.drawingCacheQuality = View.DRAWING_CACHE_QUALITY_HIGH
     }
 
     private fun callGifs() {
@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
         val giphyRepository = GiphyRepositoryProvider.provideGiphyRepository()
 
         //Subscribe to repository call
-        val trendingFlow = giphyRepository.getTrending() //val makes reference final
+        val trendingFlow = giphyRepository.getTrending()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -73,6 +73,8 @@ class MainActivity : AppCompatActivity() {
                 }, {
                     error ->
                     handleError(error)
+                }, {
+                    gifRecycler.adapter.notifyDataSetChanged()
                 })
 
         subscriptions.add(trendingFlow)
@@ -81,8 +83,8 @@ class MainActivity : AppCompatActivity() {
     private fun handleResponse(listGifs: List<GiphyGif>) {
         val manager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         manager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_NONE
-        gifRecycler?.layoutManager = manager
-        gifRecycler?.adapter = HomeAdapter(listGifs)
+        gifRecycler.layoutManager = manager
+        gifRecycler.adapter = HomeAdapter(listGifs)
     }
 
     private fun handleError(error: Throwable) {
@@ -100,8 +102,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if (drawerLayout?.isDrawerOpen(GravityCompat.START) as Boolean) {
-            drawerLayout?.closeDrawer(GravityCompat.START)
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START)
         } else {
             super.onBackPressed()
         }

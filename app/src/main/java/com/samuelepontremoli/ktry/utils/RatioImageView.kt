@@ -12,21 +12,17 @@ class RatioImageView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : ImageView(context, attrs, defStyleAttr) {
 
-    private var mHeightRatio: Float = 1f;
+    private var mHeightRatio: Float = 1f
 
-    fun setHeightRatio(scale: Float): Unit {
+    fun setHeightRatio(scale: Float) {
         mHeightRatio = scale
         requestLayout()
-    }
-
-    fun getHeightRatio(): Float {
-        return mHeightRatio
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
         if (mHeightRatio > 0.0f) {
-            val width: Int = getMeasuredWidth();
+            val width: Int = getMeasuredWidth()
             setMeasuredDimension(width, (width * mHeightRatio).toInt())
         }
     }
