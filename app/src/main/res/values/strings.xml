@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">KTry</string>
+    <string name="navigation_drawer_open">asd</string>
+    <string name="navigation_drawer_close">asd</string>
 </resources>

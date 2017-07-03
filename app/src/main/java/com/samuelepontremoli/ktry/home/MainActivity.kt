@@ -1,16 +1,19 @@
 package com.samuelepontremoli.ktry.home
 
 import android.os.Bundle
+import android.support.v4.view.GravityCompat
+import android.support.v4.widget.DrawerLayout
+import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.StaggeredGridLayoutManager
+import android.support.v7.widget.Toolbar
 import android.view.View
 import com.samuelepontremoli.ktry.R
 import com.samuelepontremoli.ktry.network.GiphyGif
 import com.samuelepontremoli.ktry.network.GiphyRepositoryProvider
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.activity_main.*
-
 
 /**
  * Created by samuele on 01/07/17.
@@ -18,13 +21,38 @@ import kotlinx.android.synthetic.main.activity_main.*
  */
 class MainActivity : AppCompatActivity() {
 
+    private var drawerLayout: DrawerLayout? = null
+    private var toolbar: Toolbar? = null
+    private var toggle: ActionBarDrawerToggle? = null
+    private var gifRecycler: RecyclerView? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        toolbar = findViewById(R.id.main_toolbar) as Toolbar
+        gifRecycler = findViewById(R.id.main_recycler) as RecyclerView
+        drawerLayout = findViewById(R.id.drawer_layout) as DrawerLayout
+
+        initDrawer()
+
         initUi()
 
         callGifs()
+    }
+
+    private fun initDrawer() {
+        setSupportActionBar(toolbar)
+        toggle = ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+        drawerLayout?.addDrawerListener(toggle as ActionBarDrawerToggle)
+        toggle?.syncState()
+    }
+
+    private fun initUi() {
+        //main_recycler.setHasFixedSize(true)
+        gifRecycler?.setItemViewCacheSize(20)
+        gifRecycler?.isDrawingCacheEnabled = true
+        gifRecycler?.drawingCacheQuality = View.DRAWING_CACHE_QUALITY_HIGH
     }
 
     private fun callGifs() {
@@ -45,22 +73,23 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    private fun initUi() {
-        //main_recycler.setHasFixedSize(true)
-        main_recycler.setItemViewCacheSize(20)
-        main_recycler.isDrawingCacheEnabled = true
-        main_recycler.drawingCacheQuality = View.DRAWING_CACHE_QUALITY_HIGH
-    }
-
     private fun handleResponse(listGifs: List<GiphyGif>) {
         val manager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         manager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_NONE
-        main_recycler.layoutManager = manager
-        main_recycler.adapter = HomeAdapter(listGifs)
+        gifRecycler?.layoutManager = manager
+        gifRecycler?.adapter = HomeAdapter(listGifs)
     }
 
     private fun handleError(error: Throwable) {
         error.printStackTrace()
+    }
+
+    override fun onBackPressed() {
+        if (drawerLayout?.isDrawerOpen(GravityCompat.START) as Boolean) {
+            drawerLayout?.closeDrawer(GravityCompat.START)
+        } else {
+            super.onBackPressed()
+        }
     }
 
 }

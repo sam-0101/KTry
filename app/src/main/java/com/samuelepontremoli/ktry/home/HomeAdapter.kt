@@ -18,7 +18,6 @@ class HomeAdapter(val listGifs: List<GiphyGif>) : RecyclerView.Adapter<HomeAdapt
 
     override fun onBindViewHolder(holder: GifHolder, position: Int) {
         holder.bind(listGifs[position])
-        holder.itemView.layoutParams.width
     }
 
     override fun getItemCount(): Int {
