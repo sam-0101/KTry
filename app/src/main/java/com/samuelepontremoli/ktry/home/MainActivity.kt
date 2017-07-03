@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initUi() {
-        main_recycler.setHasFixedSize(true)
+        //main_recycler.setHasFixedSize(true)
         main_recycler.setItemViewCacheSize(20)
         main_recycler.isDrawingCacheEnabled = true
         main_recycler.drawingCacheQuality = View.DRAWING_CACHE_QUALITY_HIGH
@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun handleResponse(listGifs: List<GiphyGif>) {
         val manager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-        manager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
+        manager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_NONE
         main_recycler.layoutManager = manager
         main_recycler.adapter = HomeAdapter(listGifs)
     }

@@ -36,7 +36,11 @@ data class GiphyFixedHeight(
         @SerializedName("width") val width: Int,
         @SerializedName("height") val height: Int,
         @SerializedName("size") val size: Int
-)
+) {
+    fun getHeightScale(): Float {
+        return height.toFloat() / width.toFloat()
+    }
+}
 
 data class GiphyMeta(
         @SerializedName("status") val status: Int,

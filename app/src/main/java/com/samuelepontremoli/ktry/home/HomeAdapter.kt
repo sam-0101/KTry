@@ -7,6 +7,7 @@ import com.samuelepontremoli.ktry.R
 import com.samuelepontremoli.ktry.inflate
 import com.samuelepontremoli.ktry.loadFromUrl
 import com.samuelepontremoli.ktry.network.GiphyGif
+import com.samuelepontremoli.ktry.utils.RatioImageView
 import kotlinx.android.synthetic.main.gif_item.view.*
 
 /**
@@ -17,6 +18,7 @@ class HomeAdapter(val listGifs: List<GiphyGif>) : RecyclerView.Adapter<HomeAdapt
 
     override fun onBindViewHolder(holder: GifHolder, position: Int) {
         holder.bind(listGifs[position])
+        holder.itemView.layoutParams.width
     }
 
     override fun getItemCount(): Int {
@@ -30,11 +32,13 @@ class HomeAdapter(val listGifs: List<GiphyGif>) : RecyclerView.Adapter<HomeAdapt
 
     class GifHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
 
-        val gifView = itemView?.gif_image
+        val gifView: RatioImageView? = itemView?.gif_image
 
         fun bind(gif: GiphyGif) {
+            gifView?.setHeightRatio(gif.images.fixedHeight.getHeightScale())
             gifView?.loadFromUrl(gif.images.fixedHeight.url)
         }
+
     }
 
 }
