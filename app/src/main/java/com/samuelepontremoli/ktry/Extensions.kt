@@ -27,5 +27,6 @@ fun ViewGroup.inflate(layoutRes: Int): View {
 }
 
 fun ImageView.loadFromUrl(url: String) {
-    Glide.with(context).load(url).into(this)
+    Glide.with(context).asGif().load(url).into(this)
 }
+
