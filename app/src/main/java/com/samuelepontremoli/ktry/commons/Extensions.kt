@@ -1,4 +1,4 @@
-package com.samuelepontremoli.ktry
+package com.samuelepontremoli.ktry.commons
 
 import android.view.LayoutInflater
 import android.view.View

@@ -4,8 +4,8 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import com.samuelepontremoli.ktry.R
-import com.samuelepontremoli.ktry.inflate
-import com.samuelepontremoli.ktry.loadFromUrl
+import com.samuelepontremoli.ktry.commons.inflate
+import com.samuelepontremoli.ktry.commons.loadFromUrl
 import com.samuelepontremoli.ktry.network.GiphyGif
 import com.samuelepontremoli.ktry.utils.RatioImageView
 import kotlinx.android.synthetic.main.gif_item.view.*
