@@ -30,7 +30,7 @@ class MainActivity : BaseActivity() {
 
         initDrawer()
 
-        changeFragment(HomeFragment.newInstance(), true)
+        changeFragment(TrendingFragment.newInstance(), true)
     }
 
     private fun initDrawer() {

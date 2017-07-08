@@ -7,6 +7,7 @@ import com.samuelepontremoli.ktry.R
 
 /**
  * Created by s.pontremoli on 06/07/2017.
+ * Base activity from which every activity inherits
  */
 open class BaseActivity: AppCompatActivity() {
 

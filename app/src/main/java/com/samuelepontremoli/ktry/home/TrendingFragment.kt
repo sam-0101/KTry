@@ -8,24 +8,23 @@ import android.view.View
 import android.view.ViewGroup
 import com.samuelepontremoli.ktry.R
 import com.samuelepontremoli.ktry.network.GiphyGif
-import com.samuelepontremoli.ktry.network.GiphyRepositoryProvider
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_home.*
 
 /**
  * Created by s.pontremoli on 06/07/2017.
- * Home Fragment
+ * Trending gifs Fragment
  */
 
-class HomeFragment: Fragment() {
+class TrendingFragment : Fragment(), ITrendingContract.ITrendingView {
 
     private var subscriptions = CompositeDisposable()
 
+    private val presenter = TrendingPresenter(this)
+
     companion object {
-        fun newInstance(): HomeFragment {
-            return HomeFragment()
+        fun newInstance(): TrendingFragment {
+            return TrendingFragment()
         }
     }
 
@@ -36,7 +35,8 @@ class HomeFragment: Fragment() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initUi()
-        callGifs()
+        //callGifs()
+        presenter.loadTrending()
     }
 
     private fun initUi() {
@@ -45,36 +45,19 @@ class HomeFragment: Fragment() {
         mainRecycler.drawingCacheQuality = View.DRAWING_CACHE_QUALITY_HIGH
     }
 
-    private fun callGifs() {
-        //Set api repository
-        val giphyRepository = GiphyRepositoryProvider.provideGiphyRepository()
-
-        //Subscribe to repository call
-        val trendingFlow = giphyRepository.getTrending()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    (data) ->
-                    handleResponse(data)
-                }, {
-                    error ->
-                    handleError(error)
-                }, {
-                    mainRecycler.adapter.notifyDataSetChanged()
-                })
-
-        subscriptions.add(trendingFlow)
-    }
-
-    private fun handleResponse(listGifs: List<GiphyGif>) {
+    override fun onTrendingLoadedSuccess(list: List<GiphyGif>) {
         val manager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         manager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_NONE
         mainRecycler.layoutManager = manager
-        mainRecycler.adapter = HomeAdapter(listGifs)
+        mainRecycler.adapter = HomeAdapter(list)
     }
 
-    private fun handleError(error: Throwable) {
+    override fun onTrendingLoadedFailure(error: Throwable) {
         error.printStackTrace()
+    }
+
+    override fun refreshTrending() {
+        mainRecycler.adapter.notifyDataSetChanged()
     }
 
     override fun onResume() {
