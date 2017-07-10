@@ -12,7 +12,9 @@ import com.samuelepontremoli.ktry.R
  * Created by samuele on 01/07/17.
  * Main class
  */
-class MainActivity : BaseActivity() {
+class TrendingActivity : BaseActivity() {
+
+    private var presenter: TrendingPresenter? = null
 
     val drawerLayout: DrawerLayout by lazy {
         findViewById(R.id.drawer_layout) as DrawerLayout
@@ -30,7 +32,11 @@ class MainActivity : BaseActivity() {
 
         initDrawer()
 
-        changeFragment(TrendingFragment.newInstance(), true)
+        val trendingFragment = TrendingFragment.newInstance()
+
+        presenter = TrendingPresenter(trendingFragment)
+
+        changeFragment(trendingFragment, true)
     }
 
     private fun initDrawer() {

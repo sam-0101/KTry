@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.fragment_home.*
 
 class TrendingFragment : Fragment(), ITrendingContract.ITrendingView {
 
-    private var presenter = TrendingPresenter(this)
+    private var presenter: TrendingPresenter? = null
 
     companion object {
         fun newInstance(): TrendingFragment {
@@ -57,12 +57,12 @@ class TrendingFragment : Fragment(), ITrendingContract.ITrendingView {
 
     override fun onResume() {
         super.onResume()
-        presenter.subscribe()
+        presenter?.subscribe()
     }
 
     override fun onPause() {
         super.onPause()
-        presenter.unsubscribe()
+        presenter?.unsubscribe()
     }
 
     override fun setPresenter(presenter: ITrendingContract.ITrendingPresenter) {

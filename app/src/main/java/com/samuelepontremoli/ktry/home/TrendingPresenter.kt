@@ -13,6 +13,10 @@ class TrendingPresenter(val view: ITrendingContract.ITrendingView) : ITrendingCo
 
     private var subscriptions = CompositeDisposable()
 
+    init {
+        view.setPresenter(this)
+    }
+
     override fun subscribe() {
         loadTrending()
     }
