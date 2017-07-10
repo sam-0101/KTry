@@ -13,6 +13,14 @@ class TrendingPresenter(val view: ITrendingContract.ITrendingView) : ITrendingCo
 
     private var subscriptions = CompositeDisposable()
 
+    override fun subscribe() {
+        loadTrending()
+    }
+
+    override fun unsubscribe() {
+        subscriptions.clear()
+    }
+
     override fun loadTrending() {
         //Set api repository
         val giphyRepository = GiphyRepositoryProvider.provideGiphyRepository()

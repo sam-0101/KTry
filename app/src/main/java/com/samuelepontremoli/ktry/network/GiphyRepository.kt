@@ -1,6 +1,6 @@
 package com.samuelepontremoli.ktry.network
 
-import com.samuelepontremoli.ktry.commons.GIPHY_KEY
+import com.samuelepontremoli.ktry.utils.GIPHY_KEY
 import io.reactivex.Flowable
 
 /**

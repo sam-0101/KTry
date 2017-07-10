@@ -4,17 +4,17 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import com.samuelepontremoli.ktry.R
-import com.samuelepontremoli.ktry.commons.inflate
-import com.samuelepontremoli.ktry.commons.loadFromUrl
+import com.samuelepontremoli.ktry.utils.inflate
+import com.samuelepontremoli.ktry.utils.loadFromUrl
 import com.samuelepontremoli.ktry.network.GiphyGif
-import com.samuelepontremoli.ktry.utils.RatioImageView
+import com.samuelepontremoli.ktry.utils.views.RatioImageView
 import kotlinx.android.synthetic.main.gif_item.view.*
 
 /**
  * Created by samuele on 01/07/17.
  * Home Adapter
  */
-class HomeAdapter(val listGifs: List<GiphyGif>) : RecyclerView.Adapter<HomeAdapter.GifHolder>() {
+class TrendingAdapter(val listGifs: List<GiphyGif>) : RecyclerView.Adapter<TrendingAdapter.GifHolder>() {
 
     override fun onBindViewHolder(holder: GifHolder, position: Int) {
         holder.bind(listGifs[position])

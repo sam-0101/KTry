@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.samuelepontremoli.ktry.utils.RatioImageView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.samuelepontremoli.ktry.utils.views.RatioImageView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/gif_image"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -8,4 +8,4 @@
     android:background="@color/colorAccent"
     android:scaleType="centerCrop">
 
-</com.samuelepontremoli.ktry.utils.RatioImageView>
+</com.samuelepontremoli.ktry.utils.views.RatioImageView>

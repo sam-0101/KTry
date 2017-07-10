@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.samuelepontremoli.ktry.R
 import com.samuelepontremoli.ktry.network.GiphyGif
-import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_home.*
 
 /**
@@ -18,9 +17,7 @@ import kotlinx.android.synthetic.main.fragment_home.*
 
 class TrendingFragment : Fragment(), ITrendingContract.ITrendingView {
 
-    private var subscriptions = CompositeDisposable()
-
-    private val presenter = TrendingPresenter(this)
+    private var presenter = TrendingPresenter(this)
 
     companion object {
         fun newInstance(): TrendingFragment {
@@ -29,14 +26,13 @@ class TrendingFragment : Fragment(), ITrendingContract.ITrendingView {
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater?.inflate(R.layout.fragment_home, container, false)
+        val view = inflater?.inflate(R.layout.fragment_home, container, false)
+        return view
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initUi()
-        //callGifs()
-        presenter.loadTrending()
     }
 
     private fun initUi() {
@@ -49,7 +45,7 @@ class TrendingFragment : Fragment(), ITrendingContract.ITrendingView {
         val manager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         manager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_NONE
         mainRecycler.layoutManager = manager
-        mainRecycler.adapter = HomeAdapter(list)
+        mainRecycler.adapter = TrendingAdapter(list)
     }
 
     override fun onTrendingLoadedFailure(error: Throwable) {
@@ -62,12 +58,16 @@ class TrendingFragment : Fragment(), ITrendingContract.ITrendingView {
 
     override fun onResume() {
         super.onResume()
-        subscriptions = CompositeDisposable()
+        presenter.subscribe()
     }
 
     override fun onPause() {
         super.onPause()
-        subscriptions.clear()
+        presenter.unsubscribe()
+    }
+
+    override fun setPresenter(presenter: ITrendingContract.ITrendingPresenter) {
+        this.presenter = presenter as TrendingPresenter
     }
 
 }

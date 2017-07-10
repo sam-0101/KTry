@@ -1,4 +1,4 @@
-package com.samuelepontremoli.ktry.commons
+package com.samuelepontremoli.ktry.utils
 
 /**
  * Created by samuele on 01/07/17.

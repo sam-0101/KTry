@@ -1,8 +1,8 @@
 package com.samuelepontremoli.ktry.network
 
 import com.google.gson.GsonBuilder
-import com.samuelepontremoli.ktry.commons.BASE_URL
-import com.samuelepontremoli.ktry.commons.DEBUG
+import com.samuelepontremoli.ktry.utils.BASE_URL
+import com.samuelepontremoli.ktry.utils.DEBUG
 import io.reactivex.Flowable
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

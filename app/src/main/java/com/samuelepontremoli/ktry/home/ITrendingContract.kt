@@ -1,5 +1,7 @@
 package com.samuelepontremoli.ktry.home
 
+import com.samuelepontremoli.ktry.commons.BasePresenter
+import com.samuelepontremoli.ktry.commons.BaseView
 import com.samuelepontremoli.ktry.network.GiphyGif
 
 /**
@@ -8,7 +10,7 @@ import com.samuelepontremoli.ktry.network.GiphyGif
  */
 interface ITrendingContract {
 
-    interface ITrendingView {
+    interface ITrendingView: BaseView<ITrendingPresenter> {
 
         fun onTrendingLoadedSuccess(list: List<GiphyGif>)
 
@@ -18,7 +20,7 @@ interface ITrendingContract {
 
     }
 
-    interface ITrendingPresenter {
+    interface ITrendingPresenter: BasePresenter {
 
         fun loadTrending()
 
