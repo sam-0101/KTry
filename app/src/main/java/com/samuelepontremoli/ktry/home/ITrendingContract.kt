@@ -10,7 +10,7 @@ import com.samuelepontremoli.ktry.network.GiphyGif
  */
 interface ITrendingContract {
 
-    interface ITrendingView: BaseView<ITrendingPresenter> {
+    interface ITrendingView : BaseView<ITrendingPresenter> {
 
         fun onTrendingLoadedSuccess(list: List<GiphyGif>)
 
@@ -20,7 +20,7 @@ interface ITrendingContract {
 
     }
 
-    interface ITrendingPresenter: BasePresenter {
+    interface ITrendingPresenter : BasePresenter {
 
         fun loadTrending()
 

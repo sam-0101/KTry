@@ -26,8 +26,7 @@ class TrendingFragment : Fragment(), ITrendingContract.ITrendingView {
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater?.inflate(R.layout.fragment_home, container, false)
-        return view
+        return inflater?.inflate(R.layout.fragment_home, container, false)
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
@@ -39,12 +38,12 @@ class TrendingFragment : Fragment(), ITrendingContract.ITrendingView {
         mainRecycler.setItemViewCacheSize(20)
         mainRecycler.isDrawingCacheEnabled = true
         mainRecycler.drawingCacheQuality = View.DRAWING_CACHE_QUALITY_HIGH
-    }
-
-    override fun onTrendingLoadedSuccess(list: List<GiphyGif>) {
         val manager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         manager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_NONE
         mainRecycler.layoutManager = manager
+    }
+
+    override fun onTrendingLoadedSuccess(list: List<GiphyGif>) {
         mainRecycler.adapter = TrendingAdapter(list)
     }
 
