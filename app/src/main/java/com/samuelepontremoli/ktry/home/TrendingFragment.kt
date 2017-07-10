@@ -8,7 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import com.samuelepontremoli.ktry.R
 import com.samuelepontremoli.ktry.network.GiphyGif
+import com.samuelepontremoli.ktry.utils.makeGone
+import com.samuelepontremoli.ktry.utils.makeVisible
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.view_error.*
+import kotlinx.android.synthetic.main.view_loading.*
+import org.jetbrains.anko.AnkoLogger
 
 /**
  * Created by s.pontremoli on 06/07/2017.
@@ -17,7 +22,13 @@ import kotlinx.android.synthetic.main.fragment_home.*
 
 class TrendingFragment : Fragment(), ITrendingContract.ITrendingView {
 
-    private var presenter: TrendingPresenter? = null
+    private val TAG = "TrendingView"
+
+    var presenter: TrendingPresenter? = null
+
+    private var trendingAdapter: TrendingAdapter? = null
+
+    private val logger = AnkoLogger(TAG)
 
     companion object {
         fun newInstance(): TrendingFragment {
@@ -41,18 +52,30 @@ class TrendingFragment : Fragment(), ITrendingContract.ITrendingView {
         val manager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         manager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_NONE
         mainRecycler.layoutManager = manager
+        swipeRefreshLayout.setOnRefreshListener { presenter?.loadTrending() }
+        trendingAdapter = TrendingAdapter(mutableListOf())
+        mainRecycler.adapter = trendingAdapter
     }
 
     override fun onTrendingLoadedSuccess(list: List<GiphyGif>) {
-        mainRecycler.adapter = TrendingAdapter(list)
+        trendingAdapter?.setList(list as MutableList<GiphyGif>)
     }
 
     override fun onTrendingLoadedFailure(error: Throwable) {
         error.printStackTrace()
+        errorView.makeVisible()
     }
 
     override fun refreshTrending() {
         mainRecycler.adapter.notifyDataSetChanged()
+    }
+
+    override fun showLoading() {
+        loadingView.makeVisible()
+    }
+
+    override fun hideLoading() {
+        loadingView.makeGone()
     }
 
     override fun onResume() {

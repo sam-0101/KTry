@@ -4,6 +4,8 @@ import com.samuelepontremoli.ktry.network.GiphyRepositoryProvider
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.info
 
 /**
  * Created by samuele on 08/07/17.
@@ -11,13 +13,19 @@ import io.reactivex.schedulers.Schedulers
  */
 class TrendingPresenter(val view: ITrendingContract.ITrendingView) : ITrendingContract.ITrendingPresenter {
 
-    private var subscriptions = CompositeDisposable()
+    private val TAG = "TrendingPresenter"
+
+    private val subscriptions: CompositeDisposable
+
+    private val logger = AnkoLogger(TAG)
 
     init {
+        subscriptions = CompositeDisposable()
         view.setPresenter(this)
     }
 
     override fun subscribe() {
+        view.showLoading()
         loadTrending()
     }
 
@@ -41,6 +49,7 @@ class TrendingPresenter(val view: ITrendingContract.ITrendingView) : ITrendingCo
                     view.onTrendingLoadedFailure(error)
                 }, {
                     view.refreshTrending()
+                    view.hideLoading()
                 })
 
         subscriptions.add(trendingFlow)

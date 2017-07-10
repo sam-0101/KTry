@@ -1,6 +1,7 @@
 package com.samuelepontremoli.ktry.home
 
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import com.samuelepontremoli.ktry.R
@@ -8,13 +9,16 @@ import com.samuelepontremoli.ktry.utils.inflate
 import com.samuelepontremoli.ktry.utils.loadFromUrl
 import com.samuelepontremoli.ktry.network.GiphyGif
 import com.samuelepontremoli.ktry.utils.views.RatioImageView
-import kotlinx.android.synthetic.main.gif_item.view.*
+import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.info
 
 /**
  * Created by samuele on 01/07/17.
  * Home Adapter
  */
-class TrendingAdapter(val listGifs: List<GiphyGif>) : RecyclerView.Adapter<TrendingAdapter.GifHolder>() {
+class TrendingAdapter(var listGifs: MutableList<GiphyGif>) : RecyclerView.Adapter<TrendingAdapter.GifHolder>() {
+
+    private val logger = AnkoLogger("TrendingAdapter")
 
     override fun onBindViewHolder(holder: GifHolder, position: Int) {
         holder.bind(listGifs[position])
@@ -25,13 +29,17 @@ class TrendingAdapter(val listGifs: List<GiphyGif>) : RecyclerView.Adapter<Trend
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GifHolder {
-        val v = parent.inflate(R.layout.gif_item)
+        val v = parent.inflate(R.layout.item_gif)
         return GifHolder(v)
+    }
+
+    fun setList(lista: MutableList<GiphyGif>) {
+        listGifs = lista
     }
 
     class GifHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
 
-        val gifView: RatioImageView? = itemView?.gif_image
+        val gifView: RatioImageView? = itemView?.findViewById(R.id.gifImage)
 
         fun bind(gif: GiphyGif) {
             gifView?.setHeightRatio(gif.images.fixedHeightSmall.getHeightScale())

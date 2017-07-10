@@ -13,4 +13,4 @@ val NUM_CACHED_VIEWS: Int = 20
 
 val DEBUG: Boolean = true
 
-val TAG: String = "OkKtry"
+val LOG_TAG: String = "OkKtry"

@@ -18,6 +18,10 @@ interface ITrendingContract {
 
         fun refreshTrending()
 
+        fun showLoading()
+
+        fun hideLoading()
+
     }
 
     interface ITrendingPresenter : BasePresenter {

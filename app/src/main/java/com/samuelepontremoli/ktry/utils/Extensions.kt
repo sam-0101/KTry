@@ -5,6 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import com.bumptech.glide.Glide
+import java.util.logging.Logger
+import kotlin.reflect.KClass
 
 /**
  * Created by samuele on 01/07/17.
@@ -29,4 +31,3 @@ fun ViewGroup.inflate(layoutRes: Int): View {
 fun ImageView.loadFromUrl(url: String) {
     Glide.with(context).asGif().load(url).into(this)
 }
-

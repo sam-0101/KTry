@@ -2,4 +2,5 @@
     <string name="app_name">KTry</string>
     <string name="navigation_drawer_open">asd</string>
     <string name="navigation_drawer_close">asd</string>
+    <string name="error">Ops! An error occurred.\nSwipe down and try again.</string>
 </resources>

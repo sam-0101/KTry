@@ -5,8 +5,10 @@ import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.widget.Toolbar
-import com.samuelepontremoli.ktry.commons.BaseActivity
 import com.samuelepontremoli.ktry.R
+import com.samuelepontremoli.ktry.commons.BaseActivity
+import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.info
 
 /**
  * Created by samuele on 01/07/17.
@@ -14,7 +16,11 @@ import com.samuelepontremoli.ktry.R
  */
 class TrendingActivity : BaseActivity() {
 
+    private val TAG = "TrendingActivity"
+
     private var presenter: TrendingPresenter? = null
+
+    private val logger = AnkoLogger(TAG)
 
     val drawerLayout: DrawerLayout by lazy {
         findViewById(R.id.drawer_layout) as DrawerLayout
@@ -34,7 +40,9 @@ class TrendingActivity : BaseActivity() {
 
         val trendingFragment = TrendingFragment.newInstance()
 
-        presenter = TrendingPresenter(trendingFragment)
+        if (presenter == null) {
+            presenter = TrendingPresenter(trendingFragment)
+        }
 
         changeFragment(trendingFragment, true)
     }
