@@ -63,11 +63,14 @@ class TrendingFragment : Fragment(), ITrendingContract.ITrendingView {
 
     override fun onTrendingLoadedFailure(error: Throwable) {
         error.printStackTrace()
+        hideLoading()
         errorView.makeVisible()
+        swipeRefreshLayout.isRefreshing = false
     }
 
     override fun onTrendingLoadedComplete() {
         mainRecycler.adapter.notifyDataSetChanged()
+        swipeRefreshLayout.isRefreshing = false
     }
 
     override fun showLoading() {
@@ -76,6 +79,10 @@ class TrendingFragment : Fragment(), ITrendingContract.ITrendingView {
 
     override fun hideLoading() {
         loadingView.makeGone()
+    }
+
+    override fun hideError() {
+        errorView.makeGone()
     }
 
     override fun onResume() {

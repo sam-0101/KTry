@@ -50,6 +50,7 @@ class TrendingPresenter(val view: ITrendingContract.ITrendingView) : ITrendingCo
                 }, {
                     view.onTrendingLoadedComplete()
                     view.hideLoading()
+                    view.hideError()
                 })
 
         subscriptions.add(trendingFlow)

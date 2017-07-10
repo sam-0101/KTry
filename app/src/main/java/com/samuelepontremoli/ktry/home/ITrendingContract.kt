@@ -22,6 +22,8 @@ interface ITrendingContract {
 
         fun hideLoading()
 
+        fun hideError()
+
     }
 
     interface ITrendingPresenter : BasePresenter {
