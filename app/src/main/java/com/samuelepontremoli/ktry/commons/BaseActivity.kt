@@ -7,9 +7,10 @@ import com.samuelepontremoli.ktry.R
 
 /**
  * Created by s.pontremoli on 06/07/2017.
- * Base activity from which every activity inherits
+ * Base activity from which every activity inherits:
+ * Can change fragments, handles backstack
  */
-open class BaseActivity: AppCompatActivity() {
+open class BaseActivity : AppCompatActivity() {
 
     fun changeFragment(f: Fragment, cleanStack: Boolean = false) {
         val ft = supportFragmentManager.beginTransaction()

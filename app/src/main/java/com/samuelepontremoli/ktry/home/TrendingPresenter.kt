@@ -9,7 +9,7 @@ import org.jetbrains.anko.info
 
 /**
  * Created by samuele on 08/07/17.
- * Trending gifs presenter
+ * Trending Gifs presenter
  */
 class TrendingPresenter(val view: ITrendingContract.ITrendingView) : ITrendingContract.ITrendingPresenter {
 
@@ -48,7 +48,7 @@ class TrendingPresenter(val view: ITrendingContract.ITrendingView) : ITrendingCo
                     error ->
                     view.onTrendingLoadedFailure(error)
                 }, {
-                    view.refreshTrending()
+                    view.onTrendingLoadedComplete()
                     view.hideLoading()
                 })
 

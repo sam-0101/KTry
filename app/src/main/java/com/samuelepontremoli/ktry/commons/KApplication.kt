@@ -5,6 +5,8 @@ import com.squareup.leakcanary.LeakCanary
 
 /**
  * Created by s.pontremoli on 10/07/2017.
+ * The application class
+ * Adds LeakCanary
  */
 class KApplication : Application() {
 

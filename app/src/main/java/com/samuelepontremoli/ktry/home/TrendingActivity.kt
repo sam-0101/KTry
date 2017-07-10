@@ -12,7 +12,8 @@ import org.jetbrains.anko.info
 
 /**
  * Created by samuele on 01/07/17.
- * Main class
+ * Trending Gifs Activity
+ * Handles drawerlayout
  */
 class TrendingActivity : BaseActivity() {
 

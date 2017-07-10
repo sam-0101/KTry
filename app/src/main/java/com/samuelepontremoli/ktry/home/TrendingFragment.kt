@@ -17,7 +17,7 @@ import org.jetbrains.anko.AnkoLogger
 
 /**
  * Created by s.pontremoli on 06/07/2017.
- * Trending gifs Fragment
+ * Trending Gifs Fragment
  */
 
 class TrendingFragment : Fragment(), ITrendingContract.ITrendingView {
@@ -66,7 +66,7 @@ class TrendingFragment : Fragment(), ITrendingContract.ITrendingView {
         errorView.makeVisible()
     }
 
-    override fun refreshTrending() {
+    override fun onTrendingLoadedComplete() {
         mainRecycler.adapter.notifyDataSetChanged()
     }
 

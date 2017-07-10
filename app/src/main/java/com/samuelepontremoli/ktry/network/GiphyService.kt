@@ -14,7 +14,7 @@ import retrofit2.http.Query
 
 /**
  * Created by samuele on 01/07/17.
- * Servizio Retrofit per chiamate all'API Giphy
+ * Retrofit Service to call Giphy API
  */
 interface GiphyService {
 

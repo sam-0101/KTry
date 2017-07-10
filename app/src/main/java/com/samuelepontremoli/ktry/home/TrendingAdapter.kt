@@ -14,7 +14,7 @@ import org.jetbrains.anko.info
 
 /**
  * Created by samuele on 01/07/17.
- * Home Adapter
+ * Trending Gifs Adapter
  */
 class TrendingAdapter(var listGifs: MutableList<GiphyGif>) : RecyclerView.Adapter<TrendingAdapter.GifHolder>() {
 

@@ -6,7 +6,7 @@ import com.samuelepontremoli.ktry.network.GiphyGif
 
 /**
  * Created by samuele on 08/07/17.
- * Contract between trending view and presenter
+ * Contract between Trending Gifs View and Presenter (MVP)
  */
 interface ITrendingContract {
 
@@ -16,7 +16,7 @@ interface ITrendingContract {
 
         fun onTrendingLoadedFailure(error: Throwable)
 
-        fun refreshTrending()
+        fun onTrendingLoadedComplete()
 
         fun showLoading()
 
