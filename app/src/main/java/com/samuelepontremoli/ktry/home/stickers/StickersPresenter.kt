@@ -8,6 +8,7 @@ import org.jetbrains.anko.AnkoLogger
 
 /**
  * Created by s.pontremoli on 12/07/2017.
+ * Trending Stickers Presenter
  */
 class StickersPresenter(val view: IStickersContract.IStickersView): IStickersContract.IStickersPresenter {
 

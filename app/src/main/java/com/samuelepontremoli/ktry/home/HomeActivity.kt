@@ -10,6 +10,7 @@ import com.samuelepontremoli.ktry.R
 import com.samuelepontremoli.ktry.commons.BaseActivity
 import com.samuelepontremoli.ktry.commons.BasePresenter
 import com.samuelepontremoli.ktry.home.random.RandomFragment
+import com.samuelepontremoli.ktry.home.random.RandomPresenter
 import com.samuelepontremoli.ktry.home.stickers.StickersFragment
 import com.samuelepontremoli.ktry.home.stickers.StickersPresenter
 import com.samuelepontremoli.ktry.home.trending.TrendingFragment
@@ -89,6 +90,7 @@ class HomeActivity : BaseActivity() {
                 }
                 RandomFragment.TAG -> {
                     val randomFragment = RandomFragment.newInstance()
+                    presenter = RandomPresenter(randomFragment)
                     changeFragment(randomFragment, true, tag)
                 }
                 StickersFragment.TAG -> {

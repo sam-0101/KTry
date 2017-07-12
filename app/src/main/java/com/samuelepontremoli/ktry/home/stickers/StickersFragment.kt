@@ -18,6 +18,7 @@ import org.jetbrains.anko.AnkoLogger
 
 /**
  * Created by s.pontremoli on 12/07/2017.
+ * Trending Stickers Fragment
  */
 class StickersFragment : Fragment(), IStickersContract.IStickersView {
 

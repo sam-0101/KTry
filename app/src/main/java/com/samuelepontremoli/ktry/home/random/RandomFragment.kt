@@ -10,6 +10,7 @@ import com.samuelepontremoli.ktry.R
 import com.samuelepontremoli.ktry.home.HomeListAdapter
 import com.samuelepontremoli.ktry.network.GiphyGif
 import com.samuelepontremoli.ktry.utils.makeGone
+import com.samuelepontremoli.ktry.utils.makeVisible
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.view_error.*
 import kotlinx.android.synthetic.main.view_loading.*
@@ -58,31 +59,33 @@ class RandomFragment : Fragment(), IRandomContract.IRandomView {
     }
 
     override fun onRandomLoadedSuccess(list: List<GiphyGif>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        randomAdapter?.setList(list as MutableList<GiphyGif>)
     }
 
     override fun onRandomLoadedFailure(error: Throwable) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        error.printStackTrace()
+        showError()
+        hideLoading()
     }
 
     override fun onRandomLoadedComplete() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        mainRecycler.adapter.notifyDataSetChanged()
     }
 
     override fun showLoading() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        swipeRefreshLayout.isRefreshing = true
     }
 
     override fun hideLoading() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        swipeRefreshLayout.isRefreshing = false
     }
 
     override fun hideError() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        errorView.makeGone()
     }
 
     override fun showError() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        errorView.makeVisible()
     }
 
     override fun setPresenter(presenter: IRandomContract.IRandomPresenter) {

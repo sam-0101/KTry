@@ -6,7 +6,7 @@ import com.samuelepontremoli.ktry.network.GiphyGif
 
 /**
  * Created by samuele on 08/07/17.
- * Contract between Trending Gifs View and Presenter (MVP)
+ * Contract between Trending Stickers View and Presenter (MVP)
  */
 interface IStickersContract {
 
