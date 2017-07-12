@@ -9,7 +9,13 @@ import io.reactivex.Flowable
  */
 
 class GiphyRepository(val apiService: GiphyService) {
+
     fun getTrending(): Flowable<getGiphyTrending> {
         return apiService.getTrending(GIPHY_KEY)
     }
+
+    fun getStickers(): Flowable<getGiphyTrendingStickers> {
+        return apiService.getTrendingStickers(GIPHY_KEY)
+    }
+
 }

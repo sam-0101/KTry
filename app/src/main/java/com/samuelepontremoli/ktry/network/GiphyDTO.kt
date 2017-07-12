@@ -13,6 +13,18 @@ data class getGiphyTrending(
         @SerializedName("pagination") val pagination: GiphyPagination
 )
 
+data class getGiphySearch(
+        @SerializedName("data") val data: List<GiphyGif>,
+        @SerializedName("meta") val meta: GiphyMeta,
+        @SerializedName("pagination") val pagination: GiphyPagination
+)
+
+
+data class getGiphyTrendingStickers(
+        @SerializedName("data") val data: List<GiphyGif>,
+        @SerializedName("meta") val meta: GiphyMeta
+)
+
 data class GiphyGif(
         @SerializedName("id") val id: String,
         @SerializedName("slug") val slug: String,

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_trending"
+        android:enabled="true"
+        android:icon="@drawable/ic_whatshot"
+        android:title="@string/trending"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_random"
+        android:enabled="true"
+        android:icon="@drawable/ic_casino"
+        android:title="@string/random"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_stickers"
+        android:enabled="true"
+        android:icon="@drawable/search_material_vector"
+        android:title="@string/stickers"
+        app:showAsAction="ifRoom" />
+</menu>

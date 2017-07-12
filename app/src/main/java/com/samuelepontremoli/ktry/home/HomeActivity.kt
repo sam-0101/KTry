@@ -8,7 +8,10 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.widget.Toolbar
 import com.samuelepontremoli.ktry.R
 import com.samuelepontremoli.ktry.commons.BaseActivity
+import com.samuelepontremoli.ktry.commons.BasePresenter
 import com.samuelepontremoli.ktry.home.random.RandomFragment
+import com.samuelepontremoli.ktry.home.stickers.StickersFragment
+import com.samuelepontremoli.ktry.home.stickers.StickersPresenter
 import com.samuelepontremoli.ktry.home.trending.TrendingFragment
 import com.samuelepontremoli.ktry.home.trending.TrendingPresenter
 import org.jetbrains.anko.AnkoLogger
@@ -22,7 +25,7 @@ class HomeActivity : BaseActivity() {
 
     private val TAG = "HomeActivity"
 
-    private var presenter: TrendingPresenter? = null
+    private var presenter: BasePresenter? = null
 
     private val logger = AnkoLogger(TAG)
 
@@ -60,13 +63,13 @@ class HomeActivity : BaseActivity() {
         bottomNavigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.action_trending -> {
-                    switchNavFragment(TrendingFragment.newInstance(), TrendingFragment.TAG)
+                    switchNavFragment(TrendingFragment.TAG)
                 }
                 R.id.action_random -> {
-                    switchNavFragment(TrendingFragment.newInstance(), RandomFragment.TAG)
+                    switchNavFragment(RandomFragment.TAG)
                 }
-                R.id.action_bo -> {
-                    switchNavFragment(TrendingFragment.newInstance(), TrendingFragment.TAG)
+                R.id.action_stickers -> {
+                    switchNavFragment(StickersFragment.TAG)
                 }
                 else -> {
                     return@setOnNavigationItemSelectedListener false
@@ -75,7 +78,7 @@ class HomeActivity : BaseActivity() {
         }
     }
 
-    private fun switchNavFragment(fragment: TrendingFragment, tag: String): Boolean {
+    private fun switchNavFragment(tag: String): Boolean {
         val frag = supportFragmentManager.findFragmentByTag(tag)
         if (frag == null) {
             when (tag) {
@@ -85,8 +88,13 @@ class HomeActivity : BaseActivity() {
                     changeFragment(trendingFragment, true, tag)
                 }
                 RandomFragment.TAG -> {
-                    val randomFragment = TrendingFragment.newInstance()
+                    val randomFragment = RandomFragment.newInstance()
                     changeFragment(randomFragment, true, tag)
+                }
+                StickersFragment.TAG -> {
+                    val stickersFragment = StickersFragment.newInstance()
+                    presenter = StickersPresenter(stickersFragment)
+                    changeFragment(stickersFragment, true, tag)
                 }
             }
         } else {
