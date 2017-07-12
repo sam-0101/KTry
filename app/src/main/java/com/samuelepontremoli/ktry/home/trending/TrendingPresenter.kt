@@ -1,11 +1,10 @@
-package com.samuelepontremoli.ktry.home
+package com.samuelepontremoli.ktry.home.trending
 
 import com.samuelepontremoli.ktry.network.GiphyRepositoryProvider
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.info
 
 /**
  * Created by samuele on 08/07/17.

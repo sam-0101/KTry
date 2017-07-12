@@ -1,4 +1,4 @@
-package com.samuelepontremoli.ktry.home
+package com.samuelepontremoli.ktry.home.trending
 
 import com.samuelepontremoli.ktry.commons.BasePresenter
 import com.samuelepontremoli.ktry.commons.BaseView
@@ -23,6 +23,8 @@ interface ITrendingContract {
         fun hideLoading()
 
         fun hideError()
+
+        fun showError()
 
     }
 

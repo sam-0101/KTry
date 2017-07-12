@@ -12,13 +12,13 @@ import com.samuelepontremoli.ktry.R
  */
 open class BaseActivity : AppCompatActivity() {
 
-    fun changeFragment(f: Fragment, cleanStack: Boolean = false) {
+    fun changeFragment(f: Fragment, cleanStack: Boolean = false, tag: String) {
         val ft = supportFragmentManager.beginTransaction()
         if (cleanStack) {
             clearBackStack()
         }
         ft.setCustomAnimations(R.anim.abc_fade_in, R.anim.abc_fade_out, R.anim.abc_popup_enter, R.anim.abc_popup_exit)
-        ft.replace(R.id.fragment_container, f)
+        ft.replace(R.id.fragment_container, f, tag)
         ft.addToBackStack(null)
         ft.commit()
     }

@@ -1,4 +1,4 @@
-package com.samuelepontremoli.ktry.home
+package com.samuelepontremoli.ktry.home.trending
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.samuelepontremoli.ktry.R
+import com.samuelepontremoli.ktry.home.HomeListAdapter
 import com.samuelepontremoli.ktry.network.GiphyGif
 import com.samuelepontremoli.ktry.utils.makeGone
 import com.samuelepontremoli.ktry.utils.makeVisible
@@ -22,15 +23,14 @@ import org.jetbrains.anko.AnkoLogger
 
 class TrendingFragment : Fragment(), ITrendingContract.ITrendingView {
 
-    private val TAG = "TrendingView"
-
     var presenter: TrendingPresenter? = null
 
-    private var trendingAdapter: TrendingAdapter? = null
+    private var trendingAdapter: HomeListAdapter? = null
 
     private val logger = AnkoLogger(TAG)
 
     companion object {
+        val TAG = "TrendingView"
         fun newInstance(): TrendingFragment {
             return TrendingFragment()
         }
@@ -46,14 +46,16 @@ class TrendingFragment : Fragment(), ITrendingContract.ITrendingView {
     }
 
     private fun initUi() {
+        errorView.makeGone()
+        loadingView.makeGone()
         mainRecycler.setItemViewCacheSize(20)
         mainRecycler.isDrawingCacheEnabled = true
         mainRecycler.drawingCacheQuality = View.DRAWING_CACHE_QUALITY_HIGH
         val manager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-        manager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_NONE
+        manager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
         mainRecycler.layoutManager = manager
         swipeRefreshLayout.setOnRefreshListener { presenter?.loadTrending() }
-        trendingAdapter = TrendingAdapter(mutableListOf())
+        trendingAdapter = HomeListAdapter(mutableListOf())
         mainRecycler.adapter = trendingAdapter
     }
 
@@ -63,26 +65,32 @@ class TrendingFragment : Fragment(), ITrendingContract.ITrendingView {
 
     override fun onTrendingLoadedFailure(error: Throwable) {
         error.printStackTrace()
+        showError()
         hideLoading()
-        errorView.makeVisible()
-        swipeRefreshLayout.isRefreshing = false
     }
 
     override fun onTrendingLoadedComplete() {
         mainRecycler.adapter.notifyDataSetChanged()
-        swipeRefreshLayout.isRefreshing = false
     }
 
     override fun showLoading() {
-        loadingView.makeVisible()
+        swipeRefreshLayout.isRefreshing = true
     }
 
     override fun hideLoading() {
-        loadingView.makeGone()
+        swipeRefreshLayout.isRefreshing = false
+    }
+
+    override fun showError() {
+        errorView.makeVisible()
     }
 
     override fun hideError() {
         errorView.makeGone()
+    }
+
+    override fun setPresenter(presenter: ITrendingContract.ITrendingPresenter) {
+        this.presenter = presenter as TrendingPresenter
     }
 
     override fun onResume() {
@@ -93,10 +101,6 @@ class TrendingFragment : Fragment(), ITrendingContract.ITrendingView {
     override fun onPause() {
         super.onPause()
         presenter?.unsubscribe()
-    }
-
-    override fun setPresenter(presenter: ITrendingContract.ITrendingPresenter) {
-        this.presenter = presenter as TrendingPresenter
     }
 
 }
