@@ -35,11 +35,11 @@ open class BaseActivity : AppCompatActivity() {
      * Finish activity when reaching the last fragment.
      */
     override fun onBackPressed() {
-        val fragmentManager = supportFragmentManager;
+        val fragmentManager = supportFragmentManager
         if (fragmentManager.backStackEntryCount > 1) {
-            fragmentManager.popBackStack();
+            fragmentManager.popBackStack()
         } else {
-            finish();
+            finish()
         }
     }
 

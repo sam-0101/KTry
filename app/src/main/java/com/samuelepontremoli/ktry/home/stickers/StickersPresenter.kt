@@ -14,12 +14,11 @@ class StickersPresenter(val view: IStickersContract.IStickersView): IStickersCon
 
     private val TAG = "StickersPresenter"
 
-    private val subscriptions: CompositeDisposable
+    private val subscriptions: CompositeDisposable = CompositeDisposable()
 
     private val logger = AnkoLogger(TAG)
 
     init {
-        subscriptions = CompositeDisposable()
         view.setPresenter(this)
     }
 

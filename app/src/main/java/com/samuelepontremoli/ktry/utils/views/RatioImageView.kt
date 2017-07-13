@@ -22,7 +22,7 @@ class RatioImageView @JvmOverloads constructor(
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
         if (mHeightRatio > 0.0f) {
-            val width: Int = getMeasuredWidth()
+            val width: Int = measuredWidth
             setMeasuredDimension(width, (width * mHeightRatio).toInt())
         }
     }

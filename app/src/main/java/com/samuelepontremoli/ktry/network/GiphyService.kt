@@ -19,10 +19,10 @@ import retrofit2.http.Query
 interface GiphyService {
 
     @GET("v1/gifs/trending")
-    fun getTrending(@Query("api_key") apiKey: String): Flowable<getGiphyTrending>
+    fun getTrendingGifs(@Query("api_key") apiKey: String): Flowable<getGiphyTrending>
 
     @GET("/v1/gifs/search")
-    fun getSearchResults(@Query("api_key") apiKey: String, @Query("q") query: String): Flowable<getGiphySearch>
+    fun getGifSearchResults(@Query("api_key") apiKey: String, @Query("q") query: String): Flowable<getGiphySearch>
 
     @GET("/v1/stickers/trending")
     fun getTrendingStickers(@Query("api_key") apiKey: String): Flowable<getGiphyTrendingStickers>
