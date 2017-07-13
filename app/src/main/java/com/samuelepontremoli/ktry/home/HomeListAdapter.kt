@@ -1,6 +1,5 @@
 package com.samuelepontremoli.ktry.home
 
-import android.graphics.drawable.Drawable
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +7,7 @@ import com.samuelepontremoli.ktry.R
 import com.samuelepontremoli.ktry.utils.inflate
 import com.samuelepontremoli.ktry.utils.loadFromUrl
 import com.samuelepontremoli.ktry.network.GiphyGif
-import com.samuelepontremoli.ktry.utils.views.RatioImageView
+import com.samuelepontremoli.ktry.utils.customs.RatioImageView
 import org.jetbrains.anko.AnkoLogger
 
 /**

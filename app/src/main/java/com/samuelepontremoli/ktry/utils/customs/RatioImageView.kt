@@ -1,4 +1,4 @@
-package com.samuelepontremoli.ktry.utils.views
+package com.samuelepontremoli.ktry.utils.customs
 
 import android.content.Context
 import android.util.AttributeSet
