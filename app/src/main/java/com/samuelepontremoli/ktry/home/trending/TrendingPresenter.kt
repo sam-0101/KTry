@@ -18,6 +18,10 @@ class TrendingPresenter(val view: ITrendingContract.ITrendingView) : ITrendingCo
 
     private val logger = AnkoLogger(TAG)
 
+    private var offset = 0
+
+    private val filesPerDownload = 25
+
     init {
         subscriptions = CompositeDisposable()
         view.setPresenter(this)
@@ -37,7 +41,7 @@ class TrendingPresenter(val view: ITrendingContract.ITrendingView) : ITrendingCo
         val giphyRepository = GiphyRepositoryProvider.provideGiphyRepository()
 
         //Subscribe to repository call
-        val trendingFlow = giphyRepository.getTrending()
+        val trendingFlow = giphyRepository.getTrending(offset)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -50,9 +54,21 @@ class TrendingPresenter(val view: ITrendingContract.ITrendingView) : ITrendingCo
                     view.onTrendingLoadedComplete()
                     view.hideLoading()
                     view.hideError()
+                    view.enableMoreItemsLoading()
                 })
 
         subscriptions.add(trendingFlow)
+    }
+
+    override fun loadMoreTrending() {
+        offset += filesPerDownload + 1
+        loadTrending()
+    }
+
+    override fun refreshTrending() {
+        offset = 0
+        view.emptyTrending()
+        loadTrending()
     }
 
 }

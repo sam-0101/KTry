@@ -18,6 +18,10 @@ interface ITrendingContract {
 
         fun onTrendingLoadedComplete()
 
+        fun emptyTrending()
+
+        fun enableMoreItemsLoading()
+
         fun showLoading()
 
         fun hideLoading()
@@ -31,6 +35,10 @@ interface ITrendingContract {
     interface ITrendingPresenter : BasePresenter {
 
         fun loadTrending()
+
+        fun loadMoreTrending()
+
+        fun refreshTrending()
 
     }
 

@@ -1,19 +1,18 @@
 package com.samuelepontremoli.ktry.utils.customs
 
-import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.StaggeredGridLayoutManager
 
 /**
  * Created by s.pontremoli on 13/07/2017.
+ * Infinite scroll listener
  */
-class InfiniteScrollListener(val func: () -> Unit, val layoutManager: LinearLayoutManager) : RecyclerView.OnScrollListener() {
+class InfiniteScrollListener(val func: () -> Unit, val layoutManager: StaggeredGridLayoutManager) : RecyclerView.OnScrollListener() {
 
-    private var previousTotal = 0
-    private var loading = true
-    private var visibleThreshold = 2
-    private var firstVisibleItem = 0
+    private var pastVisibleItems = 0
     private var visibleItemCount = 0
     private var totalItemCount = 0
+    var loading = true
 
     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
         super.onScrolled(recyclerView, dx, dy)
@@ -21,19 +20,18 @@ class InfiniteScrollListener(val func: () -> Unit, val layoutManager: LinearLayo
         if (dy > 0) {
             visibleItemCount = recyclerView.childCount
             totalItemCount = layoutManager.itemCount
-            firstVisibleItem = layoutManager.findFirstVisibleItemPosition()
+            var firstVisibleItems: IntArray? = null
+            firstVisibleItems = layoutManager.findFirstVisibleItemPositions(firstVisibleItems)
+
+            if (firstVisibleItems != null && firstVisibleItems.isNotEmpty()) {
+                pastVisibleItems = firstVisibleItems[0]
+            }
 
             if (loading) {
-                if (totalItemCount > previousTotal) {
+                if ((visibleItemCount + pastVisibleItems) >= totalItemCount) {
                     loading = false
-                    previousTotal = totalItemCount
+                    func()
                 }
-            }
-            if (!loading && (totalItemCount - visibleItemCount)
-                    <= (firstVisibleItem + visibleThreshold)) {
-                // End has been reached
-                func()
-                loading = true
             }
         }
     }

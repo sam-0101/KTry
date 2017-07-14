@@ -4,10 +4,10 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import com.samuelepontremoli.ktry.R
-import com.samuelepontremoli.ktry.utils.inflate
-import com.samuelepontremoli.ktry.utils.loadFromUrl
 import com.samuelepontremoli.ktry.network.GiphyGif
 import com.samuelepontremoli.ktry.utils.customs.RatioImageView
+import com.samuelepontremoli.ktry.utils.inflate
+import com.samuelepontremoli.ktry.utils.loadFromUrl
 import org.jetbrains.anko.AnkoLogger
 
 /**
@@ -31,8 +31,12 @@ class HomeListAdapter(var listGifs: MutableList<GiphyGif>) : RecyclerView.Adapte
         return GifHolder(v)
     }
 
-    fun setList(lista: MutableList<GiphyGif>) {
-        listGifs = lista
+    fun setList(list: MutableList<GiphyGif>) {
+        listGifs.addAll(list)
+    }
+
+    fun clearItems() {
+        listGifs.clear()
     }
 
     class GifHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {

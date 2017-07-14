@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import com.samuelepontremoli.ktry.R
 import com.samuelepontremoli.ktry.home.HomeListAdapter
 import com.samuelepontremoli.ktry.network.GiphyGif
+import com.samuelepontremoli.ktry.utils.customs.InfiniteScrollListener
 import com.samuelepontremoli.ktry.utils.makeGone
 import com.samuelepontremoli.ktry.utils.makeVisible
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -23,11 +24,13 @@ import org.jetbrains.anko.AnkoLogger
 
 class TrendingFragment : Fragment(), ITrendingContract.ITrendingView {
 
-    var presenter: TrendingPresenter? = null
+    private var presenter: TrendingPresenter? = null
 
     private var trendingAdapter: HomeListAdapter? = null
 
     private val logger = AnkoLogger(TAG)
+
+    private var infiniteScrollListener: InfiniteScrollListener? = null
 
     companion object {
         val TAG = "TrendingView"
@@ -48,15 +51,17 @@ class TrendingFragment : Fragment(), ITrendingContract.ITrendingView {
     private fun initUi() {
         errorView.makeGone()
         loadingView.makeGone()
-        mainRecycler.setItemViewCacheSize(20)
+//        mainRecycler.setItemViewCacheSize(20)
         mainRecycler.isDrawingCacheEnabled = true
         mainRecycler.drawingCacheQuality = View.DRAWING_CACHE_QUALITY_HIGH
         val manager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         manager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
         mainRecycler.layoutManager = manager
-        swipeRefreshLayout.setOnRefreshListener { presenter?.loadTrending() }
+        swipeRefreshLayout.setOnRefreshListener { presenter?.refreshTrending() }
         trendingAdapter = HomeListAdapter(mutableListOf())
         mainRecycler.adapter = trendingAdapter
+        infiniteScrollListener = InfiniteScrollListener({ presenter?.loadMoreTrending() }, manager)
+        mainRecycler.addOnScrollListener(infiniteScrollListener)
     }
 
     override fun onTrendingLoadedSuccess(list: List<GiphyGif>) {
@@ -71,6 +76,15 @@ class TrendingFragment : Fragment(), ITrendingContract.ITrendingView {
 
     override fun onTrendingLoadedComplete() {
         mainRecycler.adapter.notifyDataSetChanged()
+    }
+
+    override fun emptyTrending() {
+        trendingAdapter?.clearItems()
+        trendingAdapter?.notifyDataSetChanged()
+    }
+
+    override fun enableMoreItemsLoading() {
+        infiniteScrollListener?.loading = true
     }
 
     override fun showLoading() {

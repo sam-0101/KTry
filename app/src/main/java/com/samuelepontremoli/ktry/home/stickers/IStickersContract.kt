@@ -18,6 +18,10 @@ interface IStickersContract {
 
         fun onStickersLoadedComplete()
 
+        fun emptyStickers()
+
+        fun enableMoreItemsLoading()
+
         fun showLoading()
 
         fun hideLoading()
@@ -31,6 +35,10 @@ interface IStickersContract {
     interface IStickersPresenter : BasePresenter {
 
         fun loadStickers()
+
+        fun loadMoreStickers()
+
+        fun refreshStickers()
 
     }
 

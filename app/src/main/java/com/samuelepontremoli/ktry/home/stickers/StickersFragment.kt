@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import com.samuelepontremoli.ktry.R
 import com.samuelepontremoli.ktry.home.HomeListAdapter
 import com.samuelepontremoli.ktry.network.GiphyGif
+import com.samuelepontremoli.ktry.utils.customs.InfiniteScrollListener
 import com.samuelepontremoli.ktry.utils.makeGone
 import com.samuelepontremoli.ktry.utils.makeVisible
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -27,6 +28,8 @@ class StickersFragment : Fragment(), IStickersContract.IStickersView {
     private var stickersAdapter: HomeListAdapter? = null
 
     private val logger = AnkoLogger(TAG)
+
+    private var infiniteScrollListener: InfiniteScrollListener? = null
 
     companion object {
         val TAG = "StickersFragment"
@@ -47,15 +50,17 @@ class StickersFragment : Fragment(), IStickersContract.IStickersView {
     private fun initUi() {
         errorView.makeGone()
         loadingView.makeGone()
-        mainRecycler.setItemViewCacheSize(20)
+//        mainRecycler.setItemViewCacheSize(20)
         mainRecycler.isDrawingCacheEnabled = true
         mainRecycler.drawingCacheQuality = View.DRAWING_CACHE_QUALITY_HIGH
         val manager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         manager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
         mainRecycler.layoutManager = manager
-        swipeRefreshLayout.setOnRefreshListener { presenter?.loadStickers() }
+        swipeRefreshLayout.setOnRefreshListener { presenter?.refreshStickers() }
         stickersAdapter = HomeListAdapter(mutableListOf())
         mainRecycler.adapter = stickersAdapter
+        infiniteScrollListener = InfiniteScrollListener({ presenter?.loadMoreStickers() }, manager)
+        mainRecycler.addOnScrollListener(infiniteScrollListener)
     }
 
     override fun onStickersLoadedSuccess(list: List<GiphyGif>) {
@@ -70,6 +75,15 @@ class StickersFragment : Fragment(), IStickersContract.IStickersView {
 
     override fun onStickersLoadedComplete() {
         mainRecycler.adapter.notifyDataSetChanged()
+    }
+
+    override fun emptyStickers() {
+        stickersAdapter?.clearItems()
+        stickersAdapter?.notifyDataSetChanged()
+    }
+
+    override fun enableMoreItemsLoading() {
+        infiniteScrollListener?.loading = true
     }
 
     override fun showLoading() {
