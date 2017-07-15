@@ -5,18 +5,18 @@
         android:id="@+id/action_trending"
         android:enabled="true"
         android:icon="@drawable/ic_whatshot"
-        android:title="@string/trending"
+        android:title="@string/bm_trending"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_random"
         android:enabled="true"
         android:icon="@drawable/ic_casino"
-        android:title="@string/random"
+        android:title="@string/bm_random"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_stickers"
         android:enabled="true"
-        android:icon="@drawable/search_material_vector"
-        android:title="@string/stickers"
+        android:icon="@drawable/ic_insert_emoticon"
+        android:title="@string/bm_stickers"
         app:showAsAction="ifRoom" />
 </menu>

@@ -1,12 +1,30 @@
 <resources>
+    <!-- App -->
     <string name="app_name">KTry</string>
 
+    <!-- Drawer -->
     <string name="navigation_drawer_open">Drawer Open</string>
     <string name="navigation_drawer_close">Drawer Close</string>
 
-    <string name="trending">Trending</string>
-    <string name="random">Random</string>
-    <string name="stickers">Stickers</string>
+    <!-- Bottom Menu -->
+    <string name="bm_trending">Trending</string>
+    <string name="bm_random">Random</string>
+    <string name="bm_stickers">Stickers</string>
 
+    <!-- Toolbar Menu -->
+    <string name="tm_search">Search</string>
+    <string name="search_hint">Search…</string>
+
+    <!-- Drawer Menu -->
+    <string name="dm_import">Import</string>
+    <string name="dm_gallery">Gallery</string>
+    <string name="dm_slideshow">Slideshow</string>
+    <string name="dm_tools">Tools</string>
+    <string name="dm_communicate">Communicate</string>
+    <string name="dm_share">Share</string>
+    <string name="dm_send">Send</string>
+
+    <!-- Error Network View -->
     <string name="error">Ops! An error occurred.\nSwipe down and try again.</string>
+
 </resources>

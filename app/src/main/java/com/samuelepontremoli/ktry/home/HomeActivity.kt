@@ -1,11 +1,15 @@
 package com.samuelepontremoli.ktry.home
 
+import android.app.SearchManager
+import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
+import android.support.v7.widget.SearchView
 import android.support.v7.widget.Toolbar
+import android.view.Menu
 import com.samuelepontremoli.ktry.R
 import com.samuelepontremoli.ktry.commons.BaseActivity
 import com.samuelepontremoli.ktry.commons.BasePresenter
@@ -17,10 +21,11 @@ import com.samuelepontremoli.ktry.home.trending.TrendingFragment
 import com.samuelepontremoli.ktry.home.trending.TrendingPresenter
 import org.jetbrains.anko.AnkoLogger
 
+
 /**
  * Created by samuele on 01/07/17.
  * Trending Gifs Activity
- * Handles drawerLayout and bottomNavigationBar
+ * Handles DrawerLayout, BottomNavigationBar and SearchView
  */
 class HomeActivity : BaseActivity() {
 
@@ -109,6 +114,16 @@ class HomeActivity : BaseActivity() {
         setSupportActionBar(toolbar)
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.activity_main_toolbar, menu)
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        val searchView = menu.findItem(R.id.search).actionView as SearchView
+        // Assumes current activity is the searchable activity
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
+        return true
     }
 
     override fun onBackPressed() {
