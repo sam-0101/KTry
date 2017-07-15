@@ -30,10 +30,10 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:layout_alignParentBottom="true"
-            android:background="@color/colorPrimary"
-            app:itemBackground="@color/colorPrimary"
-            app:itemIconTint="@android:color/white"
-            app:itemTextColor="@android:color/white"
+            android:background="@android:color/white"
+            app:elevation="16dp"
+            app:itemIconTint="@color/bottom_nav_color"
+            app:itemTextColor="@color/bottom_nav_color"
             app:menu="@menu/activity_main_bottom" />
 
     </RelativeLayout>

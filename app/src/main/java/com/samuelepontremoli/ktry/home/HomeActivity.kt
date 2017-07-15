@@ -2,8 +2,10 @@ package com.samuelepontremoli.ktry.home
 
 import android.app.SearchManager
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
+import android.support.v4.content.ContextCompat
 import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
@@ -123,6 +125,7 @@ class HomeActivity : BaseActivity() {
         val searchView = menu.findItem(R.id.search).actionView as SearchView
         // Assumes current activity is the searchable activity
         searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
+//        searchView.background = ContextCompat.getDrawable(this, R.drawable.side_nav_bar)
         return true
     }
 
