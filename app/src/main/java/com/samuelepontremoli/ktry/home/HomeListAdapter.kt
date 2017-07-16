@@ -1,6 +1,5 @@
 package com.samuelepontremoli.ktry.home
 
-import android.graphics.Color
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
@@ -65,8 +64,8 @@ class HomeListAdapter(var listGifs: MutableList<GiphyGif>, val VIEW_TYPE: Int = 
         val gifView: RatioImageView? = itemView?.findViewById(R.id.gifImage)
 
         override fun bind(gif: GiphyGif) {
-            gifView?.setHeightRatio(gif.images.fixedHeightSmall.getHeightScale())
-            gifView?.loadFromUrl(gif.images.fixedHeightSmall.url)
+            gifView?.setHeightRatio(gif.images.fixedHeight.getHeightScale())
+            gifView?.loadFromUrl(gif.images.fixedHeight.url)
         }
 
     }

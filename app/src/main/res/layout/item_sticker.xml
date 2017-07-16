@@ -6,4 +6,4 @@
     android:layout_margin="1dp"
     android:adjustViewBounds="true"
     android:background="@drawable/stickers_background"
-    android:scaleType="centerInside" />
+    android:scaleType="centerCrop" />

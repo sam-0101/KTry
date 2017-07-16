@@ -67,6 +67,12 @@ class HomeActivity : BaseActivity() {
         changeFragment(trendingFragment, true, TrendingFragment.TAG)
     }
 
+    private fun initDrawer() {
+        setSupportActionBar(toolbar)
+        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+    }
+
     private fun initBottomNavigation() {
         bottomNavigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
@@ -110,12 +116,6 @@ class HomeActivity : BaseActivity() {
             return false
         }
         return true
-    }
-
-    private fun initDrawer() {
-        setSupportActionBar(toolbar)
-        drawerLayout.addDrawerListener(toggle)
-        toggle.syncState()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
