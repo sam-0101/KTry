@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.samuelepontremoli.ktry.utils.customs.RatioImageView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/stickerImage"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="1dp"
+    android:adjustViewBounds="true"
+    android:background="@drawable/stickers_background"
+    android:scaleType="centerInside" />

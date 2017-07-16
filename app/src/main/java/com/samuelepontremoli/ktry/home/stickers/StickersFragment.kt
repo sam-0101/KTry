@@ -57,7 +57,7 @@ class StickersFragment : Fragment(), IStickersContract.IStickersView {
         manager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
         mainRecycler.layoutManager = manager
         swipeRefreshLayout.setOnRefreshListener { presenter?.refreshStickers() }
-        stickersAdapter = HomeListAdapter(mutableListOf())
+        stickersAdapter = HomeListAdapter(mutableListOf(), HomeListAdapter.TYPE_STICKER)
         mainRecycler.adapter = stickersAdapter
         infiniteScrollListener = InfiniteScrollListener({ presenter?.loadMoreStickers() }, manager)
         mainRecycler.addOnScrollListener(infiniteScrollListener)
