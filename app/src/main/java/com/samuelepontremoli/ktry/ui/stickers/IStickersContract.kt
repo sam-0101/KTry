@@ -1,4 +1,4 @@
-package com.samuelepontremoli.ktry.home.stickers
+package com.samuelepontremoli.ktry.ui.stickers
 
 import com.samuelepontremoli.ktry.commons.BasePresenter
 import com.samuelepontremoli.ktry.commons.BaseView
@@ -35,8 +35,6 @@ interface IStickersContract {
     interface IStickersPresenter : BasePresenter {
 
         fun loadStickers()
-
-        fun loadMoreStickers()
 
         fun refreshStickers()
 

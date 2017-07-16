@@ -1,4 +1,4 @@
-package com.samuelepontremoli.ktry.home.random
+package com.samuelepontremoli.ktry.ui.trending
 
 import com.samuelepontremoli.ktry.network.GiphyRepositoryProvider
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -7,51 +7,64 @@ import io.reactivex.schedulers.Schedulers
 import org.jetbrains.anko.AnkoLogger
 
 /**
- * Created by s.pontremoli on 12/07/2017.
- * Random Gifs Presenter
+ * Created by samuele on 08/07/17.
+ * Trending Gifs presenter
  */
-class RandomPresenter(val view: IRandomContract.IRandomView) : IRandomContract.IRandomPresenter {
+class TrendingPresenter(val view: ITrendingContract.ITrendingView) : ITrendingContract.ITrendingPresenter {
 
-    private val TAG = "RandomPresenter"
+    private val TAG = "TrendingPresenter"
 
-    private val subscriptions: CompositeDisposable = CompositeDisposable()
+    private val subscriptions: CompositeDisposable
 
     private val logger = AnkoLogger(TAG)
 
+    private var offset = 0
+
+    private val filesPerDownload = 25
+
     init {
+        subscriptions = CompositeDisposable()
         view.setPresenter(this)
     }
 
     override fun subscribe() {
         view.showLoading()
-        loadRandom()
+        loadTrending()
     }
 
     override fun unsubscribe() {
         subscriptions.clear()
     }
 
-    override fun loadRandom() {
+    override fun loadTrending() {
         //Set api repository
         val giphyRepository = GiphyRepositoryProvider.provideGiphyRepository()
 
         //Subscribe to repository call
-        val trendingFlow = giphyRepository.getSearchResults("asdf")
+        val trendingFlow = giphyRepository.getTrending(offset)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     (data) ->
-                    view.onRandomLoadedSuccess(data)
+                    view.onTrendingLoadedSuccess(data)
                 }, {
                     error ->
-                    view.onRandomLoadedFailure(error)
+                    view.onTrendingLoadedFailure(error)
                 }, {
-                    view.onRandomLoadedComplete()
+                    view.onTrendingLoadedComplete()
                     view.hideLoading()
                     view.hideError()
+                    view.enableMoreItemsLoading()
+                    offset += filesPerDownload + 1
                 })
 
         subscriptions.add(trendingFlow)
+    }
+
+    override fun refreshTrending() {
+        offset = 0
+        view.emptyTrending()
+        loadTrending()
     }
 
 }

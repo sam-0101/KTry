@@ -22,7 +22,7 @@ interface GiphyService {
     fun getTrendingGifs(@Query("api_key") apiKey: String, @Query("offset") offset: Int): Flowable<getGiphyTrending>
 
     @GET("/v1/gifs/search")
-    fun getGifSearchResults(@Query("api_key") apiKey: String, @Query("q") query: String): Flowable<getGiphySearch>
+    fun getGifSearchResults(@Query("api_key") apiKey: String, @Query("q") query: String, @Query("offset") offset: Int): Flowable<getGiphySearch>
 
     @GET("/v1/stickers/trending")
     fun getTrendingStickers(@Query("api_key") apiKey: String, @Query("offset") offset: Int): Flowable<getGiphyTrendingStickers>

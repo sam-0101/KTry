@@ -1,4 +1,4 @@
-package com.samuelepontremoli.ktry.home.random
+package com.samuelepontremoli.ktry.ui.random
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -7,11 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.samuelepontremoli.ktry.R
-import com.samuelepontremoli.ktry.home.HomeListAdapter
+import com.samuelepontremoli.ktry.ui.GifsListAdapter
 import com.samuelepontremoli.ktry.network.GiphyGif
 import com.samuelepontremoli.ktry.utils.makeGone
 import com.samuelepontremoli.ktry.utils.makeVisible
-import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_gifs.*
 import kotlinx.android.synthetic.main.view_error.*
 import kotlinx.android.synthetic.main.view_loading.*
 import org.jetbrains.anko.AnkoLogger
@@ -24,7 +24,7 @@ class RandomFragment : Fragment(), IRandomContract.IRandomView {
 
     var presenter: RandomPresenter? = null
 
-    private var randomAdapter: HomeListAdapter? = null
+    private var randomAdapter: GifsListAdapter? = null
 
     private val logger = AnkoLogger(TAG)
 
@@ -36,7 +36,7 @@ class RandomFragment : Fragment(), IRandomContract.IRandomView {
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater?.inflate(R.layout.fragment_home, container, false)
+        return inflater?.inflate(R.layout.fragment_gifs, container, false)
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
@@ -54,7 +54,7 @@ class RandomFragment : Fragment(), IRandomContract.IRandomView {
         manager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
         mainRecycler.layoutManager = manager
         swipeRefreshLayout.setOnRefreshListener { presenter?.loadRandom() }
-        randomAdapter = HomeListAdapter(mutableListOf())
+        randomAdapter = GifsListAdapter(mutableListOf())
         mainRecycler.adapter = randomAdapter
     }
 

@@ -1,4 +1,4 @@
-package com.samuelepontremoli.ktry.home
+package com.samuelepontremoli.ktry.ui
 
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -14,9 +14,9 @@ import org.jetbrains.anko.AnkoLogger
  * Created by samuele on 01/07/17.
  * Trending Gifs Adapter
  */
-class HomeListAdapter(var listGifs: MutableList<GiphyGif>, val VIEW_TYPE: Int = 1) : RecyclerView.Adapter<HomeListAdapter.GiphyHolder>() {
+class GifsListAdapter(var listGifs: MutableList<GiphyGif>, val VIEW_TYPE: Int = 1) : RecyclerView.Adapter<GifsListAdapter.GiphyHolder>() {
 
-    private val logger = AnkoLogger("HomeListAdapter")
+    private val logger = AnkoLogger("GifsListAdapter")
 
     companion object {
         val TYPE_GIF: Int = 1

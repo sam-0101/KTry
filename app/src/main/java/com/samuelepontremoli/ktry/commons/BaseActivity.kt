@@ -1,9 +1,12 @@
 package com.samuelepontremoli.ktry.commons
 
+import android.content.Context
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v7.app.AppCompatActivity
+import android.view.inputmethod.InputMethodManager
 import com.samuelepontremoli.ktry.R
+
 
 /**
  * Created by s.pontremoli on 06/07/2017.
@@ -40,6 +43,14 @@ open class BaseActivity : AppCompatActivity() {
             fragmentManager.popBackStack()
         } else {
             finish()
+        }
+    }
+
+    fun hideKeyboard() {
+        val view = this.currentFocus
+        if (view != null) {
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(view.windowToken, 0)
         }
     }
 

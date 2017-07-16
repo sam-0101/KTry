@@ -1,4 +1,4 @@
-package com.samuelepontremoli.ktry.home.trending
+package com.samuelepontremoli.ktry.ui.trending
 
 import com.samuelepontremoli.ktry.commons.BasePresenter
 import com.samuelepontremoli.ktry.commons.BaseView
@@ -35,8 +35,6 @@ interface ITrendingContract {
     interface ITrendingPresenter : BasePresenter {
 
         fun loadTrending()
-
-        fun loadMoreTrending()
 
         fun refreshTrending()
 

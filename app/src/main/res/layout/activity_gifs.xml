@@ -19,7 +19,7 @@
             android:layout_above="@+id/bottom_navigation">
 
             <include
-                layout="@layout/app_bar_main"
+                layout="@layout/app_bar_gifs"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
@@ -44,7 +44,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        app:headerLayout="@layout/nav_header_main"
+        app:headerLayout="@layout/nav_header_gifs"
         app:menu="@menu/activity_main_drawer" />
 
 </android.support.v4.widget.DrawerLayout>

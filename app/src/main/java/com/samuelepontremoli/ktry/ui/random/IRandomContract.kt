@@ -1,4 +1,4 @@
-package com.samuelepontremoli.ktry.home.random
+package com.samuelepontremoli.ktry.ui.random
 
 import com.samuelepontremoli.ktry.commons.BasePresenter
 import com.samuelepontremoli.ktry.commons.BaseView

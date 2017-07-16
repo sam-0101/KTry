@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
     android:orientation="vertical"
-    tools:context="com.samuelepontremoli.ktry.home.HomeActivity">
+    tools:context="com.samuelepontremoli.ktry.ui.GifsActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/main_toolbar"
@@ -18,7 +18,7 @@
 
     <include
         android:id="@+id/main_content"
-        layout="@layout/content_main"
+        layout="@layout/content_gifs"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

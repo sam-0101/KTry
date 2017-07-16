@@ -1,4 +1,4 @@
-package com.samuelepontremoli.ktry.home.stickers
+package com.samuelepontremoli.ktry.ui.stickers
 
 import com.samuelepontremoli.ktry.network.GiphyRepositoryProvider
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -54,14 +54,10 @@ class StickersPresenter(val view: IStickersContract.IStickersView): IStickersCon
                     view.hideLoading()
                     view.hideError()
                     view.enableMoreItemsLoading()
+                    offset += filesPerDownload + 1
                 })
 
         subscriptions.add(trendingFlow)
-    }
-
-    override fun loadMoreStickers() {
-        offset += filesPerDownload + 1
-        loadStickers()
     }
 
     override fun refreshStickers() {

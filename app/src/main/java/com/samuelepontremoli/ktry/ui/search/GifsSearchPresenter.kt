@@ -1,4 +1,4 @@
-package com.samuelepontremoli.ktry.home.trending
+package com.samuelepontremoli.ktry.ui.search
 
 import com.samuelepontremoli.ktry.network.GiphyRepositoryProvider
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -7,12 +7,12 @@ import io.reactivex.schedulers.Schedulers
 import org.jetbrains.anko.AnkoLogger
 
 /**
- * Created by samuele on 08/07/17.
- * Trending Gifs presenter
+ * Created by samuele on 16/07/17.
+ * Gifs Search Presenter
  */
-class TrendingPresenter(val view: ITrendingContract.ITrendingView) : ITrendingContract.ITrendingPresenter {
+class GifsSearchPresenter(val view: IGifsSearchContract.IGifsSearchView, var query: String = "") : IGifsSearchContract.IGifsSearchPresenter {
 
-    private val TAG = "TrendingPresenter"
+    private val TAG = "GifsSearchPresenter"
 
     private val subscriptions: CompositeDisposable
 
@@ -29,46 +29,41 @@ class TrendingPresenter(val view: ITrendingContract.ITrendingView) : ITrendingCo
 
     override fun subscribe() {
         view.showLoading()
-        loadTrending()
+        loadGifsSearch()
     }
 
     override fun unsubscribe() {
         subscriptions.clear()
     }
 
-    override fun loadTrending() {
+    override fun loadGifsSearch() {
         //Set api repository
         val giphyRepository = GiphyRepositoryProvider.provideGiphyRepository()
 
-        //Subscribe to repository call
-        val trendingFlow = giphyRepository.getTrending(offset)
+        val gifsSearchFlow = giphyRepository.getSearchResults(query, offset)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     (data) ->
-                    view.onTrendingLoadedSuccess(data)
+                    view.onGifsSearchLoadedSuccess(data)
                 }, {
                     error ->
-                    view.onTrendingLoadedFailure(error)
+                    view.onGifsSearchLoadedFailure(error)
                 }, {
-                    view.onTrendingLoadedComplete()
+                    view.onGifsSearchLoadedComplete()
                     view.hideLoading()
                     view.hideError()
                     view.enableMoreItemsLoading()
+                    offset += filesPerDownload + 1
                 })
 
-        subscriptions.add(trendingFlow)
+        subscriptions.add(gifsSearchFlow)
     }
 
-    override fun loadMoreTrending() {
-        offset += filesPerDownload + 1
-        loadTrending()
-    }
-
-    override fun refreshTrending() {
+    override fun refreshGifsSearch() {
         offset = 0
-        view.emptyTrending()
-        loadTrending()
+        view.emptyGifsSearch()
+        loadGifsSearch()
     }
 
 }

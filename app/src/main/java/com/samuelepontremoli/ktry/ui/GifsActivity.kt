@@ -1,11 +1,9 @@
-package com.samuelepontremoli.ktry.home
+package com.samuelepontremoli.ktry.ui
 
 import android.app.SearchManager
 import android.content.Context
-import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
-import android.support.v4.content.ContextCompat
 import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
@@ -15,23 +13,22 @@ import android.view.Menu
 import com.samuelepontremoli.ktry.R
 import com.samuelepontremoli.ktry.commons.BaseActivity
 import com.samuelepontremoli.ktry.commons.BasePresenter
-import com.samuelepontremoli.ktry.home.random.RandomFragment
-import com.samuelepontremoli.ktry.home.random.RandomPresenter
-import com.samuelepontremoli.ktry.home.stickers.StickersFragment
-import com.samuelepontremoli.ktry.home.stickers.StickersPresenter
-import com.samuelepontremoli.ktry.home.trending.TrendingFragment
-import com.samuelepontremoli.ktry.home.trending.TrendingPresenter
+import com.samuelepontremoli.ktry.ui.random.RandomFragment
+import com.samuelepontremoli.ktry.ui.random.RandomPresenter
+import com.samuelepontremoli.ktry.ui.search.GifsSearchFragment
+import com.samuelepontremoli.ktry.ui.search.GifsSearchPresenter
+import com.samuelepontremoli.ktry.ui.stickers.StickersFragment
+import com.samuelepontremoli.ktry.ui.stickers.StickersPresenter
+import com.samuelepontremoli.ktry.ui.trending.TrendingFragment
+import com.samuelepontremoli.ktry.ui.trending.TrendingPresenter
 import org.jetbrains.anko.AnkoLogger
-
 
 /**
  * Created by samuele on 01/07/17.
  * Trending Gifs Activity
  * Handles DrawerLayout, BottomNavigationBar and SearchView
  */
-class HomeActivity : BaseActivity() {
-
-    private val TAG = "HomeActivity"
+class GifsActivity : BaseActivity() {
 
     private var presenter: BasePresenter? = null
 
@@ -50,20 +47,26 @@ class HomeActivity : BaseActivity() {
         findViewById(R.id.bottom_navigation) as BottomNavigationView
     }
 
+    companion object {
+        val TAG = "GifsActivity"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        initDrawer()
+        setContentView(R.layout.activity_gifs)
 
         initBottomNavigation()
 
-        val trendingFragment = TrendingFragment.newInstance()
+        initDrawer()
 
+        initDefaultFragment()
+    }
+
+    private fun initDefaultFragment() {
+        val trendingFragment = TrendingFragment.newInstance()
         if (presenter == null) {
             presenter = TrendingPresenter(trendingFragment)
         }
-
         changeFragment(trendingFragment, true, TrendingFragment.TAG)
     }
 
@@ -121,12 +124,30 @@ class HomeActivity : BaseActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.activity_main_toolbar, menu)
+        initSearch(menu)
+        return true
+    }
+
+    private fun initSearch(menu: Menu) {
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         val searchView = menu.findItem(R.id.search).actionView as SearchView
         // Assumes current activity is the searchable activity
         searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
 //        searchView.background = ContextCompat.getDrawable(this, R.drawable.side_nav_bar)
-        return true
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                val searchFragment = GifsSearchFragment.newInstance()
+                if (query != null) {
+                    presenter = GifsSearchPresenter(searchFragment, query)
+                }
+                changeFragment(searchFragment, true, GifsSearchFragment.TAG)
+                hideKeyboard()
+                return true
+            }
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return true
+            }
+        })
     }
 
     override fun onBackPressed() {

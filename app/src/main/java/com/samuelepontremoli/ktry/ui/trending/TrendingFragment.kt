@@ -1,4 +1,4 @@
-package com.samuelepontremoli.ktry.home.stickers
+package com.samuelepontremoli.ktry.ui.trending
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -7,39 +7,42 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.samuelepontremoli.ktry.R
-import com.samuelepontremoli.ktry.home.HomeListAdapter
+import com.samuelepontremoli.ktry.ui.GifsListAdapter
 import com.samuelepontremoli.ktry.network.GiphyGif
 import com.samuelepontremoli.ktry.utils.customs.InfiniteScrollListener
 import com.samuelepontremoli.ktry.utils.makeGone
 import com.samuelepontremoli.ktry.utils.makeVisible
-import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_gifs.*
 import kotlinx.android.synthetic.main.view_error.*
 import kotlinx.android.synthetic.main.view_loading.*
 import org.jetbrains.anko.AnkoLogger
 
 /**
- * Created by s.pontremoli on 12/07/2017.
- * Trending Stickers Fragment
+ * Created by s.pontremoli on 06/07/2017.
+ * Trending Gifs Fragment
  */
-class StickersFragment : Fragment(), IStickersContract.IStickersView {
 
-    var presenter: StickersPresenter? = null
+class TrendingFragment : Fragment(), ITrendingContract.ITrendingView {
 
-    private var stickersAdapter: HomeListAdapter? = null
+    private var presenter: TrendingPresenter? = null
+
+    private var trendingAdapter: GifsListAdapter? = null
 
     private val logger = AnkoLogger(TAG)
 
     private var infiniteScrollListener: InfiniteScrollListener? = null
 
+    private var firstStart: Boolean = true
+
     companion object {
-        val TAG = "StickersFragment"
-        fun newInstance(): StickersFragment {
-            return StickersFragment()
+        val TAG = "TrendingView"
+        fun newInstance(): TrendingFragment {
+            return TrendingFragment()
         }
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater?.inflate(R.layout.fragment_home, container, false)
+        return inflater?.inflate(R.layout.fragment_gifs, container, false)
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
@@ -56,30 +59,30 @@ class StickersFragment : Fragment(), IStickersContract.IStickersView {
         val manager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         manager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
         mainRecycler.layoutManager = manager
-        swipeRefreshLayout.setOnRefreshListener { presenter?.refreshStickers() }
-        stickersAdapter = HomeListAdapter(mutableListOf(), HomeListAdapter.TYPE_STICKER)
-        mainRecycler.adapter = stickersAdapter
-        infiniteScrollListener = InfiniteScrollListener({ presenter?.loadMoreStickers() }, manager)
+        swipeRefreshLayout.setOnRefreshListener { presenter?.refreshTrending() }
+        trendingAdapter = GifsListAdapter(mutableListOf())
+        mainRecycler.adapter = trendingAdapter
+        infiniteScrollListener = InfiniteScrollListener({ presenter?.loadTrending() }, manager)
         mainRecycler.addOnScrollListener(infiniteScrollListener)
     }
 
-    override fun onStickersLoadedSuccess(list: List<GiphyGif>) {
-        stickersAdapter?.setList(list as MutableList<GiphyGif>)
+    override fun onTrendingLoadedSuccess(list: List<GiphyGif>) {
+        trendingAdapter?.setList(list as MutableList<GiphyGif>)
     }
 
-    override fun onStickersLoadedFailure(error: Throwable) {
+    override fun onTrendingLoadedFailure(error: Throwable) {
         error.printStackTrace()
         showError()
         hideLoading()
     }
 
-    override fun onStickersLoadedComplete() {
+    override fun onTrendingLoadedComplete() {
         mainRecycler.adapter.notifyDataSetChanged()
     }
 
-    override fun emptyStickers() {
-        stickersAdapter?.clearItems()
-        stickersAdapter?.notifyDataSetChanged()
+    override fun emptyTrending() {
+        trendingAdapter?.clearItems()
+        trendingAdapter?.notifyDataSetChanged()
     }
 
     override fun enableMoreItemsLoading() {
@@ -94,21 +97,22 @@ class StickersFragment : Fragment(), IStickersContract.IStickersView {
         swipeRefreshLayout.isRefreshing = false
     }
 
-    override fun hideError() {
-        errorView.makeGone()
-    }
-
     override fun showError() {
         errorView.makeVisible()
     }
 
-    override fun setPresenter(presenter: IStickersContract.IStickersPresenter) {
-        this.presenter = presenter as StickersPresenter
+    override fun hideError() {
+        errorView.makeGone()
+    }
+
+    override fun setPresenter(presenter: ITrendingContract.ITrendingPresenter) {
+        this.presenter = presenter as TrendingPresenter
     }
 
     override fun onResume() {
         super.onResume()
         presenter?.subscribe()
+
     }
 
     override fun onPause() {

@@ -18,8 +18,8 @@ class GiphyRepository(val apiService: GiphyService) {
         return apiService.getTrendingStickers(GIPHY_KEY, offset)
     }
 
-    fun getSearchResults(query: String): Flowable<getGiphySearch> {
-        return apiService.getGifSearchResults(GIPHY_KEY, query)
+    fun getSearchResults(query: String, offset: Int = 0): Flowable<getGiphySearch> {
+        return apiService.getGifSearchResults(GIPHY_KEY, query, offset)
     }
 
 }
