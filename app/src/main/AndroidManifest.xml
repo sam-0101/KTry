@@ -16,6 +16,12 @@
         <activity
             android:name=".ui.GifsActivity"
             android:configChanges="screenSize|orientation"
+            android:label="@string/app_name" />
+
+        <activity
+            android:name=".ui.SplashActivity"
+            android:configChanges="screenSize|orientation"
+            android:noHistory="true"
             android:label="@string/app_name">
 
             <intent-filter>
